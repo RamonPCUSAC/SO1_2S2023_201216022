@@ -1,0 +1,104 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+.App-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+/* Estilos para el formulario */
+/* Estilos para el formulario mejorado */
+.App-form form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.App-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.App-form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Alinear labels e inputs */
+.App-form label,
+.App-form input {
+  width: 100%;
+}
+
+/* Agregar espacio entre los campos */
+.App-form input {
+  margin-bottom: 15px;
+}
+
+.App-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Estilos para la tabla */
+.App-table {
+  flex: 2;
+  padding: 20px;
+}
+
+.App-table h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+table th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Estilos para filas impares de la tabla */
+table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+/* Estilos para resaltar la fila seleccionada (si es necesario) */
+table tbody tr.selected {
+  background-color: #e0f7fa;
+}
