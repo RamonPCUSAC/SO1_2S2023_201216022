@@ -12,7 +12,15 @@ function App() {
 
   useEffect(() => {
     // Realiza una solicitud GET a la API al cargar la página
-    fetch('http://localhost:8080/albums')
+    fetch('http://backend:8080/albums',{
+      method: 'GET',
+      mode: 'cors', // Habilita las solicitudes CORS
+      credentials: 'include', // Envía las cookies en la solicitud
+      headers: {
+        'Accept': 'application/json',
+        // Otras cabeceras personalizadas si es necesario
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -32,8 +40,9 @@ function App() {
     event.preventDefault();
 
     // Realiza una solicitud POST a la API para insertar un nuevo álbum
-    fetch('http://localhost:8080/insert', {
+    fetch('http://backend:8080/insert', {
       method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -43,7 +52,15 @@ function App() {
       .then((data) => {
         console.log(data);
         // Recarga la lista de álbumes después de la inserción
-        fetch('http://localhost:8080/albums')
+        fetch('http://backend:8080/albums',{
+          method: 'GET',
+          mode: 'cors', // Habilita las solicitudes CORS
+          credentials: 'include', // Envía las cookies en la solicitud
+          headers: {
+            'Accept': 'application/json',
+            // Otras cabeceras personalizadas si es necesario
+          }
+        })
           .then((response) => response.json())
           .then((data) => {
             console.log(data);

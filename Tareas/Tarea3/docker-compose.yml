@@ -1,0 +1,32 @@
+version: '3'
+services:
+  database:
+    image: "mysql"
+    container_name: 'db-mysql'
+    environment:
+      MYSQL_ROOT_PASSWORD: 230992
+    volumes:
+      - base_mysql:/var/lib/mysql      
+    ports:
+      - "3006:3306"
+
+  backend:
+    image: "app_go"
+    container_name: 'Backend_Go'
+    environment:
+      DB_USER: root
+      DB_PASSWORD: 230992
+      DB_HOST: database
+      DB_PORT: 3306
+      DB_NAME: tarea3
+    ports:
+      - "8080:8080"
+
+  frontend:
+    image: "img_frontend"
+    container_name: 'frontend_react'
+    ports:
+      - "3000:80"
+
+volumes:
+  base_mysql: 

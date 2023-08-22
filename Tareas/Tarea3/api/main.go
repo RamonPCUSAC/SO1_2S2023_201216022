@@ -22,17 +22,20 @@ type Album struct {
 func main() {
 	// Configurar las credenciales de la base de datos desde variables de entorno
 	dbUser := "root"
-	dbPass := ""
+	dbPass := "230992"
 	dbName := "tarea3"
-	dbHost := "localhost:3006"
+	dbHost := "database"
+	dbPort := "3306"
 
 	/*dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASS")
 	dbName := os.Getenv("DB_NAME")
-	dbHost := os.Getenv("DB_HOST")*/
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")*/
+	fmt.Printf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
 
 	// Crear la cadena de conexión a la base de datos MySQL
-	dbURI := fmt.Sprintf("%s:%s@tcp(%s)/%s", dbUser, dbPass, dbHost, dbName)
+	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
 
 	// Conectar a la base de datos
 	db, err := sql.Open("mysql", dbURI)
@@ -46,7 +49,7 @@ func main() {
 
 	// Configura CORS para permitir solicitudes desde tu dominio de React
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"}, // Reemplaza con tu URL de frontend
+		AllowedOrigins:   []string{"http://frontend:80"}, // Reemplaza con tu URL de frontend
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
 		AllowCredentials: true,
 	})
@@ -78,6 +81,7 @@ func main() {
 
 	// Ruta para obtener todos los registros
 	r.GET("/albums", func(c *gin.Context) {
+		fmt.Printf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
 		rows, err := db.Query("SELECT AlbumID, TituloAlbum, Artista, AnioLanzamiento, GeneroMusical FROM Albums")
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -103,8 +107,17 @@ func main() {
 }
 
 func corsMiddleware(c *cors.Cors) gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		c.HandlerFunc(ctx.Writer, ctx.Request)
-		ctx.Next()
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", c.Request.Header.Get("Origin"))
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		// Otras configuraciones de CORS según sea necesario
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusOK)
+			return
+		}
+
+		c.Next()
 	}
 }
